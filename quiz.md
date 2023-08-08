@@ -21,3 +21,56 @@ an element inside the parent's <Outlet /> at the same path
 as the parent route.
 
 
+html, body {
+    margin: 0;
+    padding: 10px;
+}
+
+a {
+    color: #161616;
+    text-decoration: none;
+    padding: 15px
+}
+
+a:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+nav > a:first-of-type {
+    margin-left: -15px;
+}
+
+.my-link {
+    color: red;
+}
+<NavLink to="/about" className={({isActive}) => isActive ? "my-link" : null }>About</NavLink>
+
+
+or
+html, body {
+    margin: 0;
+    padding: 10px;
+}
+
+a {
+    color: #161616;
+    text-decoration: none;
+    padding: 15px
+}
+
+a:hover {
+    font-weight: bold;
+    text-decoration: underline;
+    color: red;
+    
+}
+
+nav > a:first-of-type {
+    margin-left: -15px;
+}
+
+.my-link {
+    color: red;
+}
+<NavLink to="/" style={({isActive}) => isActive ? activeStyle : null }>Home</NavLink>
