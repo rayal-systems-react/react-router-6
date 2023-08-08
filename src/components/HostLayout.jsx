@@ -25,6 +25,12 @@ const HostLayout = () => {
         </NavLink>
         <NavLink
           style={({ isActive }) => (isActive ? activeStyles : null)}
+          to="/host/vans"
+        >
+          Vans
+        </NavLink>
+        <NavLink
+          style={({ isActive }) => (isActive ? activeStyles : null)}
           to="/host/reviews"
         >
           Reviews
@@ -36,7 +42,3 @@ const HostLayout = () => {
 };
 
 export default HostLayout;
-
-// font-weight: bold;
-// text-decoration: underline;
-// color: #161616;
