@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, Outlet } from "react-router-dom";
+import { useParams, Link, Outlet, NavLink } from "react-router-dom";
 
 const HostVanDetail = () => {
   const { id } = useParams();
@@ -14,6 +14,13 @@ const HostVanDetail = () => {
   if (!currentVan) {
     return <h1>Loading...</h1>;
   }
+
+  const activeStyles = {
+    fontWeight: "bold",
+    textDecoration: "underline",
+    color: "#161616",
+  };
+
   return (
     <section>
       <Link to=".." relative="path" className="back-button">
@@ -30,6 +37,27 @@ const HostVanDetail = () => {
             <h4>${currentVan.price}/day</h4>
           </div>
         </div>
+        <nav className="host-van-detail-nav">
+          <NavLink
+            end
+            to="."
+            style={({ isActive }) => (isActive ? activeStyles : null)}
+          >
+            Details
+          </NavLink>
+          <NavLink
+            to="pricing"
+            style={({ isActive }) => (isActive ? activeStyles : null)}
+          >
+            Pricing
+          </NavLink>
+          <NavLink
+            to="photos"
+            style={({ isActive }) => (isActive ? activeStyles : null)}
+          >
+            Photos
+          </NavLink>
+        </nav>
         <Outlet />
       </div>
     </section>
