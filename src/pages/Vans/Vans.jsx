@@ -6,15 +6,21 @@ const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [vans, setVans] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const typeFilter = searchParams.get("type");
 
   useEffect(() => {
     async function loadVans() {
       setLoading(true);
-      const data = await getVans();
-      setVans(data);
-      setLoading(false);
+      try {
+        const data = await getVans();
+        setVans(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     }
     loadVans();
   }, []);
@@ -42,8 +48,12 @@ const Vans = () => {
     </div>
   ));
 
-  if(loading) {
-    return <h1>Loading...</h1>
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>There was an error: {error.message}</h1>;
   }
 
   return (
