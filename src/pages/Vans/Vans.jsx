@@ -6,7 +6,6 @@ const Vans = () => {
   const [vans, setVans] = useState([]);
 
   const typeFilter = searchParams.get("type");
-  console.log(searchParams.toString());
 
   useEffect(() => {
     fetch("/api/vans")
@@ -19,8 +18,8 @@ const Vans = () => {
     : vans;
 
   const vanElement = displayedVans.map((van) => (
-    <div key={van.id} state={{search: searchParams.toString()}} className="van-tile">
-      <Link to={van.id}>
+    <div key={van.id} className="van-tile">
+      <Link to={van.id} state={{search: `?${searchParams.toString()}`}}>
         <img src={van.imageUrl} alt="van-img-url" />
         <div className="van-info">
           <h3>{van.name}</h3>
