@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { getVans } from "../../api";
 
 const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -8,9 +9,11 @@ const Vans = () => {
   const typeFilter = searchParams.get("type");
 
   useEffect(() => {
-    fetch("/api/vans")
-      .then((res) => res.json())
-      .then((data) => setVans(data.vans));
+    async function loadVans() {
+      const data = await getVans();
+      setVans(data);
+    }
+    loadVans();
   }, []);
 
   const displayedVans = typeFilter
@@ -19,7 +22,10 @@ const Vans = () => {
 
   const vanElement = displayedVans.map((van) => (
     <div key={van.id} className="van-tile">
-      <Link to={van.id} state={{search: `?${searchParams.toString()}`, type: typeFilter}}>
+      <Link
+        to={van.id}
+        state={{ search: `?${searchParams.toString()}`, type: typeFilter }}
+      >
         <img src={van.imageUrl} alt="van-img-url" />
         <div className="van-info">
           <h3>{van.name}</h3>
@@ -38,19 +44,25 @@ const Vans = () => {
       <div className="van-list-filter-buttons">
         <button
           onClick={() => setSearchParams({ type: "simple" })}
-          className={`van-type simple ${typeFilter === 'simple' ? 'selected' : ''}`}
+          className={`van-type simple ${
+            typeFilter === "simple" ? "selected" : ""
+          }`}
         >
           Simple
         </button>
         <button
           onClick={() => setSearchParams({ type: "luxury" })}
-          className={`van-type luxury ${typeFilter === 'luxury' ? 'selected' : ''}`}
+          className={`van-type luxury ${
+            typeFilter === "luxury" ? "selected" : ""
+          }`}
         >
           Luxury
         </button>
         <button
           onClick={() => setSearchParams({ type: "rugged" })}
-          className={`van-type rugged ${typeFilter === 'rugged' ? 'selected' : ''}`}
+          className={`van-type rugged ${
+            typeFilter === "rugged" ? "selected" : ""
+          }`}
         >
           Rugged
         </button>
