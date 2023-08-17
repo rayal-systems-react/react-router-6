@@ -8,29 +8,10 @@ export const loader = () => {
 
 const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [vans, setVans] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const data = useLoaderData();
-  console.log(data);
+  const vans = useLoaderData();
 
   const typeFilter = searchParams.get("type");
-
-  useEffect(() => {
-    async function loadVans() {
-      setLoading(true);
-      try {
-        const data = await getVans();
-        setVans(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadVans();
-  }, []);
-
   const displayedVans = typeFilter
     ? vans.filter((van) => van.type === typeFilter)
     : vans;
@@ -53,10 +34,6 @@ const Vans = () => {
       </Link>
     </div>
   ));
-
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
 
   if (error) {
     return <h1>There was an error: {error.message}</h1>;
